@@ -1,0 +1,11 @@
+This txt outlines what features are to be added to the game.
+
+* deck:
+  an array containing the names of all the cards in your deck.
+  the deck should be an object that supports basic manipulation like shuffling,
+  drawing from the deck etc.
+  perhaps the deck could be a subclass of class cardContainer ,which would
+  also include the graveyard, the hand etc.
+
+* auto-reformatting of strings
+  the text font should be resized base on teh size of thte string automatically.
