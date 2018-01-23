@@ -2,6 +2,7 @@ import pygame
 import os
 from utilities import *
 from  CardDatabase import *
+import numpy as np
 #colors
 WHITE = (255,255,255)
 BLACK = (0,0,0)
