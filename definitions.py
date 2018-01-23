@@ -1,6 +1,7 @@
 import pygame
 import os
-import utilities
+from utilities import *
+from  CardDatabase import *
 #colors
 WHITE = (255,255,255)
 BLACK = (0,0,0)
@@ -19,3 +20,5 @@ cardList = []
 #card sizes
 card_dimensions = (127, 192)
 central_padding = 5
+
+#fonts

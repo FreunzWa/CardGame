@@ -1,3 +1,5 @@
+from definitions import *
+
 def cardname_correction(cardname):
     """
     @function
@@ -10,9 +12,27 @@ def cardname_correction(cardname):
     capitalize = True
     for ind, char in enumerate(cardname):
         if capitalize:
-            corrected_name.append(char.upper())
+            corrected_name = corrected_name + char.upper()
             capitalize = False
         elif char == "_":
             capitalize = True
+            corrected_name = corrected_name + " "
         else:
-            corrected_name.append(char)
+            corrected_name = corrected_name + char
+
+    return corrected_name
+
+def draw_text(text, (x,y), target_surface, text_color = (0,0,0), text_size = 14):
+    """
+    @function
+    draws a text surface containing text for displaying information to user
+    @params
+    string text = the text to be drawn
+    int (x,y) = the location for drawing
+    target_surface = the surface to be drawn on
+    text_color = color of text.
+    """
+    text = str(text)
+    game_font1 = pygame.font.Font("freesansbold.ttf", 16)
+    text_surface = game_font1.render(text, True, text_color)
+    target_surface.blit(text_surface, (x,y))

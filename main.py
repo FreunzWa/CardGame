@@ -21,9 +21,10 @@ if __name__ == "__main__":
     print "Display Initialising . . ."
     print "Simulation start."
     window = pygame.display.set_mode(window_resolution)
-
+    trialcard = Card()
+    trialcard = Card(card = "fish_man", pos=(300,0))
     while game_running:
-        trialcard = Card()
+
         #display
         window.fill(WHITE)
         for card in cardList:
