@@ -10,7 +10,7 @@ class CardContainer:
         """
         self.player_no = player_no
         self.container_type = container_type
-        self.id_values = np.random.randint(1,11,(size,))
+        self.id_values = np.random.randint(1,12,(size,))
         self.contents = np.ndarray([0,])
         self.bounds = pygame.Surface((0,0))
         for i in self.id_values:
@@ -48,7 +48,7 @@ class CardContainer:
 
 
         for card_num, card in enumerate(self.contents):
-            if self.container_type == "hand":
+            if self.container_type == "hand" and card.pickup == False:
                 card.pos = ((padding*3+card.icon.get_width()*1.2*card_num+0.5*card_dimensions[0], target_surface.get_height()-padding*3-card.icon.get_height()))
                 target_surface.blit(card.icon, (card.pos) )
                 card.is_icon = True
@@ -75,7 +75,6 @@ class CardContainer:
         element from the container, and returns the card object.
         """
         if len(self.contents) > 0:
-            pdb.set_trace()
             drawn_card = self.contents[ind]
             self.contents = np.delete(self.contents, ind)
             target_container.contents = np.append(target_container.contents, drawn_card)

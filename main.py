@@ -45,15 +45,15 @@ if __name__ == "__main__":
 
             #drawing visible cards
             if card_container.container_type == "hand":
+                initial_mouse_occupied = mouse_occupied
                 for counter, card in enumerate(card_container.contents):
-                    card.draw(window)
-                    mouse_occupied = card.drag(mouse_occupied)
-                    if mouse_occupied:
-                        card_container.pull_card(field,counter)
-
-
-
-
+                    mouse_occupied = card.drag(mouse_occupied, card.icon)
+                    if card.pickup == True:
+                        card.draw(window)
+                    if initial_mouse_occupied and not mouse_occupied:
+                        if card.pos[1] < 270:
+                            print card.pos[1]
+                            card_container.pull_card(field)
 
         pygame.display.flip()
         #ending the game
