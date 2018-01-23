@@ -3,19 +3,26 @@ from definitions import *
 
 
 class Card:
-    def __init__(self, card = "big_pot", pos=(0,0)):
+    def __init__(self,  card_id = 1, pos=(0,0)):
         """
         @params:
         card = the image file without the *.png extension to be loaded, determines
         the class type.
         """
-        self.picture = pygame.image.load(path+'\\res\\img\\cards\\'+card+".png")
+        self.card = "big_pot" #for now this is default.
+        for key in card_dict:
+            if card_dict[key]["ID"] == card_id:
+                self.card = key
+                break
+
+        self.picture = pygame.image.load(path+'\\res\\img\\cards\\'+self.card+".png")
         self.visible = True
         self.position = 0
         self.pos = pos
-        self.name = cardname_correction(card)
-        self.stats = (card_dict[self.name]["ATTACK"],
-            card_dict[self.name]["DEFENSE"])
+        self.card_key = self.card
+        self.name = cardname_correction(self.card)
+        self.stats = (card_dict[self.card_key]["ATTACK"],
+            card_dict[self.card_key]["DEFENSE"])
         #mouse anchor centres the drag point of the card when the card is being dragged
         self.mouse_anchor = (0,0)
         self.pickup = False

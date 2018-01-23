@@ -3,6 +3,7 @@ import os
 from utilities import *
 from  CardDatabase import *
 import numpy as np
+import pdb
 #colors
 WHITE = (255,255,255)
 BLACK = (0,0,0)
@@ -16,7 +17,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 
 #objects Lists
 cardList = []
-
+card_container_list = []
 
 #card sizes
 card_dimensions = (127, 192)
