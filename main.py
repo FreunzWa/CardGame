@@ -25,16 +25,17 @@ if __name__ == "__main__":
     trialcard = Card(card_id = 1)
     trialcard = Card(card_id = 1)
 
-
+    player_field = CardContainer(size=0, container_type = "field")
     player_deck = CardContainer(size = 40)
     enemy_deck = CardContainer(size = 40, player_no = 2)
     player_hand = CardContainer(size = 5, container_type = "hand")
-    field = CardContainer(size=0, container_type = "field")
+
+
 
     while game_running:
 
         #display
-        window.fill(WHITE)
+        window.fill(BACKGROUND)
 
         for card_container in card_container_list:
             card_container.display(window)
@@ -53,7 +54,7 @@ if __name__ == "__main__":
                     if initial_mouse_occupied and not mouse_occupied:
                         if card.pos[1] < 270:
                             print card.pos[1]
-                            card_container.pull_card(field)
+                            card_container.pull_card(player_field)
 
         pygame.display.flip()
         #ending the game
