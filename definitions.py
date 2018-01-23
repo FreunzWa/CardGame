@@ -23,3 +23,9 @@ card_dimensions = (127, 192)
 central_padding = 5
 
 #fonts
+
+
+
+
+#mouse
+mouse_occupied = False

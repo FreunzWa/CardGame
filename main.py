@@ -29,6 +29,9 @@ if __name__ == "__main__":
         window.fill(WHITE)
         for card in cardList:
             card.draw(window)
+            mouse_occupied = card.drag(mouse_occupied)
+
+
 
 
 

@@ -16,8 +16,9 @@ class Card:
         self.name = cardname_correction(card)
         self.stats = (card_dict[self.name]["ATTACK"],
             card_dict[self.name]["DEFENSE"])
-
-
+        #mouse anchor centres the drag point of the card when the card is being dragged
+        self.mouse_anchor = (0,0)
+        self.pickup = False
         self.make_card_surface()
         cardList.append(self)
 
@@ -52,3 +53,28 @@ class Card:
         draw_text("ATK: "+str(self.stats[0]), (central_padding*2, surf.get_height()*0.65), surf)
         draw_text("DEF: "+str(self.stats[1]), (central_padding*2, surf.get_height()*0.75), surf)
         self.spr_card = surf
+
+    def drag(self, mouse_occupied):
+
+        """
+        @func
+        if the card's container is of type 'hand' then the card can be dragged
+        to a new location.
+        """
+
+        if pygame.mouse.get_pressed()[0]:
+            if (pygame.mouse.get_pos()[0] > self.pos[0] and pygame.mouse.get_pos()[0]<self.pos[0]+self.spr_card.get_width()) and (((pygame.mouse.get_pos()[1] > self.pos[1] and pygame.mouse.get_pos()[1]<self.pos[1]+self.spr_card.get_height()) )):
+                if not self.pickup and not mouse_occupied:
+                    self.pickup = True
+                    mouse_occupied = True
+                    self.mouse_anchor = ((pygame.mouse.get_pos()[0]-self.pos[0]),(pygame.mouse.get_pos()[1]-self.pos[1]))
+        else:
+            if self.pickup:
+                self.pickup = False
+                mouse_occupied = False
+
+
+        if self.pickup:
+            self.pos = ((pygame.mouse.get_pos()[0]-self.mouse_anchor[0]),(pygame.mouse.get_pos()[1]-self.mouse_anchor[1]))
+
+        return mouse_occupied
