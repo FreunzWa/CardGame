@@ -4,6 +4,8 @@ import pygame
 import time
 import pdb
 from definitions import *
+from Card import *
+
 
 window_resolution = (640, 480)
 
@@ -13,6 +15,7 @@ game_running = True
 
 
 if __name__ == "__main__":
+
     start_time = time.time()
     pygame.init()
     print "Display Initialising . . ."
@@ -20,9 +23,12 @@ if __name__ == "__main__":
     window = pygame.display.set_mode(window_resolution)
 
     while game_running:
-
+        trialcard = Card()
         #display
         window.fill(WHITE)
+        for card in cardList:
+            card.draw(window)
+
 
 
         pygame.display.flip()
