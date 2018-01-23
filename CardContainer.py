@@ -29,6 +29,7 @@ class CardContainer:
         target_surface - the screen or surface for the container to be drawn
         to
         """
+        padding = 4
         if self.container_type == "deck":
             card_back = pygame.Surface((card_dimensions))
             card_back.fill(CARD_OUTLINE)
@@ -37,13 +38,25 @@ class CardContainer:
             for card_bunch in range(0,len(self.contents)//2):
                 #draws the deck in the appropriate position depending on player
                 max_deck_height =(60)//2*2
-                padding = 4
+
                 if self.player_no == 1:
                     target_surface.blit(card_back, (target_surface.get_width()
                     -card_dimensions[0]-padding, target_surface.get_height()
                     -card_dimensions[1]-padding-card_bunch*2 ))
                 else:
                     target_surface.blit(card_back,(padding, padding+max_deck_height-card_bunch*2))
+
+
+        for card_num, card in enumerate(self.contents):
+            if self.container_type == "hand":
+                card.pos = ((padding*3+card.icon.get_width()*1.2*card_num+0.5*card_dimensions[0], target_surface.get_height()-padding*3-card.icon.get_height()))
+                target_surface.blit(card.icon, (card.pos) )
+                card.is_icon = True
+                if card.is_undermouse(card.icon) == True:
+                    target_surface.blit(card.spr_card, (card.pos[0]-card.icon.get_width()/2, card.pos[1]-card.spr_card.get_height()-padding))
+            else:
+                card.is_icon = False
+
 
 
     def shuffle(self):
@@ -55,15 +68,16 @@ class CardContainer:
         """
         self.contents = np.random.shuffle(self.contents)
 
-    def pull_card(self, target_container):
+    def pull_card(self, target_container, ind = 0):
         """
         @func
         especially used when the container is of type deck. removes the first
         element from the container, and returns the card object.
         """
         if len(self.contents) > 0:
-            drawn_card = self.contents[0]
-            self.contents =  self.contents[1:]
+            pdb.set_trace()
+            drawn_card = self.contents[ind]
+            self.contents = np.delete(self.contents, ind)
             target_container.contents = np.append(target_container.contents, drawn_card)
             print target_container.contents
         else:

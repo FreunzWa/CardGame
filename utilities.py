@@ -33,6 +33,6 @@ def draw_text(text, (x,y), target_surface, text_color = (0,0,0), text_size = 14)
     text_color = color of text.
     """
     text = str(text)
-    game_font1 = pygame.font.Font("freesansbold.ttf", 16)
+    game_font1 = pygame.font.Font("freesansbold.ttf", text_size)
     text_surface = game_font1.render(text, True, text_color)
     target_surface.blit(text_surface, (x,y))

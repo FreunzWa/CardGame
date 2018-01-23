@@ -21,7 +21,7 @@ cardList = []
 card_container_list = []
 
 #card sizes
-card_dimensions = (127, 192)
+card_dimensions = (127, 160)
 central_padding = 5
 
 #fonts

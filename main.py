@@ -25,9 +25,11 @@ if __name__ == "__main__":
     trialcard = Card(card_id = 1)
     trialcard = Card(card_id = 1)
 
+
     player_deck = CardContainer(size = 40)
     enemy_deck = CardContainer(size = 40, player_no = 2)
     player_hand = CardContainer(size = 5, container_type = "hand")
+    field = CardContainer(size=0, container_type = "field")
 
     while game_running:
 
@@ -43,9 +45,11 @@ if __name__ == "__main__":
 
             #drawing visible cards
             if card_container.container_type == "hand":
-                for card in card_container.contents:
+                for counter, card in enumerate(card_container.contents):
                     card.draw(window)
                     mouse_occupied = card.drag(mouse_occupied)
+                    if mouse_occupied:
+                        card_container.pull_card(field,counter)
 
 
 
