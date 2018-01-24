@@ -4,8 +4,10 @@ import pygame
 import time
 import pdb
 from definitions import *
+from utilities import *
 from Card import *
 from CardContainer import *
+from DuelController import *
 
 window_resolution = (720, 640)
 
@@ -31,6 +33,8 @@ if __name__ == "__main__":
     player_hand = CardContainer(size = 5, container_type = "hand")
     enemy_hand = CardContainer(size = 5, player_no = 2, container_type = "hand")
 
+    game_controller = DuelController()
+
     pygame.display.set_caption("Ruler of Card Battles")
     #the objects that will be used in teh game are defined here.
     game_field = new_field
@@ -41,6 +45,7 @@ if __name__ == "__main__":
         #display
         window.fill(BACKGROUND)
         draw_text("Indev 0.4", (window.get_width()-120,4), window)
+        game_controller.display(window)
         for card_container in card_container_list:
             card_container.display(window)
             #getting the top card from the deck

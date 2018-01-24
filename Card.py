@@ -1,4 +1,5 @@
 from definitions import *
+from utilities import *
 
 
 
@@ -72,7 +73,10 @@ class Card:
         card_icon = pygame.Surface((card_dimensions[0]/2, card_dimensions[1]/2))
         card_icon.fill(self.color)
         pygame.draw.rect(card_icon, CARD_OUTLINE, (0,0,card_icon.get_width(), card_icon.get_height()), 1)
-        pygame.draw.rect(card_icon, CARD_OUTLINE, (0, card_icon.get_height()/7, card_icon.get_width(), card_icon.get_height()*1/2))
+        #the picture
+        pic = pygame.transform.scale(self.picture, (card_icon.get_width()-2, card_icon.get_height()*1/2))
+        pic = outline_surface(pic)
+        card_icon.blit(pic,(1, card_icon.get_height()/7))
         draw_text(self.name, (2,2), card_icon, text_size = 8)
         self.icon = card_icon
 
@@ -103,5 +107,5 @@ class Card:
         if self.pickup:
             self.pos = ((pygame.mouse.get_pos()[0]-self.mouse_anchor[0]),(pygame.mouse.get_pos()[1]-self.mouse_anchor[1]))
 
-        
+
         return mouse_occupied

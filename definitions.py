@@ -1,6 +1,6 @@
 import pygame
 import os
-from utilities import *
+
 from  CardDatabase import *
 import numpy as np
 import pdb

@@ -1,5 +1,6 @@
 from definitions import *
 
+
 def cardname_correction(cardname):
     """
     @function
@@ -40,3 +41,13 @@ def draw_text(text, (x,y), target_surface, text_color = (0,0,0), text_size = 14)
 def mouse_in_region((x,y,width,height), surf = None):
     if surf == None:
         return (pygame.mouse.get_pos()[0] > x and pygame.mouse.get_pos()[0] < x+width) and (pygame.mouse.get_pos()[1] > y and pygame.mouse.get_pos()[1] < y+height)
+
+def outline_surface(surf):
+
+    """
+    Returns the same surface but with a black border drawn at its extremities.
+    It draws over the outermost pixels.
+    """
+
+    pygame.draw.rect(surf, BLACK, (0,0,surf.get_width(), surf.get_height()), 1)
+    return surf

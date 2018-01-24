@@ -2,6 +2,7 @@
 from definitions import *
 from Card import *
 from Button import *
+from utilities import *
 
 class CardContainer:
     def __init__(self, size = 0, container_type = "deck", player_no = 1, contents = None):
@@ -80,19 +81,21 @@ class CardContainer:
                     -card_dimensions[1]*scale-padding-card_bunch*2 ))
                 else:
                     target_surface.blit(card_back,(padding, padding+max_deck_height-card_bunch*2))
-
+        ##HAND
         if self.container_type != "field":
             for card_num, card in enumerate(self.contents):
                 if self.container_type == "hand" and card.pickup == False:
                     if self.player_no ==1:
                         card.pos = ((padding*3+card.icon.get_width()*1.2*card_num+0.5*card_dimensions[0], target_surface.get_height()-padding*3-card.icon.get_height()))
                         target_surface.blit(card.icon, (card.pos) )
+                        if card.is_undermouse(card.icon) == True:
+                            target_surface.blit(card.spr_card, (card.pos[0]-card.icon.get_width()/2, card.pos[1]-card.spr_card.get_height()*0.4-padding))
+
                     else:
                         card.pos = ((padding*18+card.icon.get_width()*1.2*card_num+0.5*card_dimensions[0], padding*3))
-                        target_surface.blit(card.icon, (card.pos) )
+                        card.icon.fill(CARD_BACK)
+                        target_surface.blit(outline_surface(card.icon), (card.pos) )
                     card.is_icon = True
-                    if card.is_undermouse(card.icon) == True:
-                        target_surface.blit(card.spr_card, (card.pos[0]-card.icon.get_width()/2, card.pos[1]-card.spr_card.get_height()-padding))
 
                 else:
                     card.is_icon = False
