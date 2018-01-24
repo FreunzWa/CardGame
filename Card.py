@@ -4,7 +4,7 @@ import pygame
 import utilities as util
 
 class Card:
-    def __init__(self,  card_id = 1, pos=(0,0)):
+    def __init__(self,  card_id = 1, pos=(0,0), container_type = None, player_no= None):
         """
         @params:
         card = the image file without the *.png extension to be loaded, determines
@@ -16,7 +16,7 @@ class Card:
             if card_dict[key]["ID"] == card_id:
                 self.card = key
                 break
-
+        self.container = container_type
         self.picture = pygame.image.load(path+'\\res\\img\\cards\\'+self.card+".png")
         self.visible = True
         self.position = 0
@@ -33,6 +33,9 @@ class Card:
         self.make_card_surface()
         self.make_card_icon()
         cardList.append(self)
+        self.player_no = player_no
+    
+
 
     def draw(self, target_surface):
         """
@@ -66,6 +69,7 @@ class Card:
         util.draw_text("ATK: "+str(self.stats[0]), (central_padding*2, surf.get_height()*0.73), surf)
         util.draw_text("DEF: "+str(self.stats[1]), (central_padding*2, surf.get_height()*0.83), surf)
         self.spr_card = surf
+
 
     def make_card_icon(self):
         """

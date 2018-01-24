@@ -22,10 +22,14 @@ card_container_list = []
 card_dimensions = (127, 160)
 central_padding = 5
 
-#fonts
+#display
+fullscreen = 1
 
 
 
 
 #mouse
 mouse_occupied = False
+
+#game rules
+hand_capacity = 4

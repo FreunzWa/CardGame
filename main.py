@@ -36,35 +36,26 @@ if __name__ == "__main__":
     creates all of the card containers necessary for a duel
     """
     #Starting values
-    duel_field = CardContainer(size=0, container_type = "field")
-
-    duel_graveyard = CardContainer(size = 0, container_type = "graveyard")
-
-    player1 = Player(type = "human")
-    player1.deck =CardContainer(size = 40)
-    player1.hand = CardContainer(size = 5, container_type = "hand")
-    player2 = Player(type = "cpu", deck=CardContainer(size = 40), player_no = 2)
-    player2.deck =CardContainer(size = 40)
-    player2.hand = CardContainer(size = 5, player_no = 2, container_type = "hand")
-
-    duel_controller = DuelController(player1, player2)
 
 
 
+    control = DuelController()
     pygame.display.set_caption("Ruler of Card Battles")
     clock = pygame.time.Clock()
+
     while game_running:
         clock.tick(60)
+        control.activities()
         #display
         window.fill(BACKGROUND)
-        util.draw_text("Indev 0.4", (window.get_width()-120,4), window)
-        duel_controller.display(window)
+        util.draw_text("Indev 0.6", (window.get_width()-120,4), window, text_color = WHITE)
+        control.display(window)
         for card_container in card_container_list:
             card_container.display(window)
 
 
             #drawing visible cards
-            if card_container.container_type == "hand":
+            if card_container.container_type == "hand" and control.phase_number== 1:
 
                 for counter, card in enumerate(card_container.contents):
                     initial_mouse_occupied = mouse_occupied
@@ -72,9 +63,11 @@ if __name__ == "__main__":
                     if card.pickup == True:
                         card.draw(window)
                     if initial_mouse_occupied and not mouse_occupied:
-                        for node in duel_field.surfaces:
+                        for node in control.duel_field.surfaces:
                             if util.mouse_in_region((node.x ,node.y, node.width, node.height)):
-                                card_container.pull_card(duel_field, ind = counter)
+                                #checking if you are putting the card in one of the field spots
+                                control.advance_phase()
+                                card_container.pull_card(control.duel_field, ind = counter)
                                 card.pos = (node.x+node.width/2-card_dimensions[0]/2, node.y+node.height/2-card_dimensions[1]/2)
                                 break
                         break
@@ -85,7 +78,7 @@ if __name__ == "__main__":
                     initial_mouse_occupied = mouse_occupied
                     mouse_occupied = card.drag(mouse_occupied, card.icon)
                     if not initial_mouse_occupied and mouse_occupied:
-                        card_container.pull_card(duel_graveyard, ind = counter)
+                        card_container.pull_card(control.duel_graveyard, ind = counter)
                         mouse_occupied = False
 
         pygame.display.flip()

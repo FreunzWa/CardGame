@@ -34,7 +34,7 @@ class CardContainer:
             self.contents = np.ndarray([0,])
 
         for i in self.id_values:
-            new_card = Card(card_id = i)
+            new_card = Card(card_id = i, container_type = self.container_type, player_no=player_no )
             self.contents = np.append(self.contents, new_card)
         self.pos = (0,0)
 
@@ -119,8 +119,9 @@ class CardContainer:
         """
         if len(self.contents) > 0:
             drawn_card = self.contents[ind]
+            drawn_card.container = target_container
             self.contents = np.delete(self.contents, ind)
             target_container.contents = np.append(target_container.contents, drawn_card)
-            print target_container.contents
+            return drawn_card
         else:
             raise ValueError("There are no more cards left in deck!")

@@ -9,3 +9,7 @@ class Player:
         """
         self.type = type
         self.deck = deck
+
+    def cpu_play_card(self):
+        if self.type == "cpu":
+            return random.choose(self.hand)
