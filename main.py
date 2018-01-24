@@ -25,18 +25,20 @@ if __name__ == "__main__":
     trialcard = Card(card_id = 1)
     trialcard = Card(card_id = 1)
 
-    player_field = CardContainer(size=0, container_type = "field")
+    new_field = CardContainer(size=0, container_type = "field")
     player_deck = CardContainer(size = 40)
     enemy_deck = CardContainer(size = 40, player_no = 2)
     player_hand = CardContainer(size = 5, container_type = "hand")
 
-
+    #pygame.set_caption("Ruler of Card Battles")
+    #the objects that will be used in teh game are defined here.
+    game_field = new_field
 
     while game_running:
 
         #display
         window.fill(BACKGROUND)
-
+        draw_text("Indev 0.4", (window.get_width()-120,4), window)
         for card_container in card_container_list:
             card_container.display(window)
             #getting the top card from the deck
@@ -46,15 +48,23 @@ if __name__ == "__main__":
 
             #drawing visible cards
             if card_container.container_type == "hand":
-                initial_mouse_occupied = mouse_occupied
+
                 for counter, card in enumerate(card_container.contents):
+                    initial_mouse_occupied = mouse_occupied
                     mouse_occupied = card.drag(mouse_occupied, card.icon)
                     if card.pickup == True:
                         card.draw(window)
                     if initial_mouse_occupied and not mouse_occupied:
-                        if card.pos[1] < 270:
-                            print card.pos[1]
-                            card_container.pull_card(player_field)
+                        for node in game_field.surfaces:
+                            if mouse_in_region((node.x ,node.y, node.width, node.height)):
+                                card_container.pull_card(game_field, ind = counter)
+                                card.pos = (node.x+node.width/2-card_dimensions[0]/2, node.y+node.height/2-card_dimensions[1]/2)
+                                break
+                        break
+
+            if card_container.container_type == "field":
+                for counter, card in enumerate(card_container.contents):
+                    card.draw(window)
 
         pygame.display.flip()
         #ending the game

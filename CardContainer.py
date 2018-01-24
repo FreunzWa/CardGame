@@ -16,7 +16,7 @@ class CardContainer:
         #Field initialisation
         if self.container_type == "field":
             #self.field, when the container is a field it has an associated field shape
-            self.field = [2,3]
+            self.field = [2,1]
             self.surfaces = np.zeros([0,])
             self.node_width = card_dimensions[0]*1.1
             self.node_height = card_dimensions[1]*1.1

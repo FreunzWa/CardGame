@@ -36,3 +36,7 @@ def draw_text(text, (x,y), target_surface, text_color = (0,0,0), text_size = 14)
     game_font1 = pygame.font.Font("freesansbold.ttf", text_size)
     text_surface = game_font1.render(text, True, text_color)
     target_surface.blit(text_surface, (x,y))
+
+def mouse_in_region((x,y,width,height), surf = None):
+    if surf == None:
+        return (pygame.mouse.get_pos()[0] > x and pygame.mouse.get_pos()[0] < x+width) and (pygame.mouse.get_pos()[1] > y and pygame.mouse.get_pos()[1] < y+height)
