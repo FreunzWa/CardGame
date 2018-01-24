@@ -11,9 +11,10 @@ This txt outlines what features are to be added to the game.
   the text font should be resized base on teh size of thte string automatically.
 
 
-2) text display for the phase of the game in the form:
-  * Player # : Phase (at this stage, either draw phase/ main phase/ battle phase/ end phase)
-3)
+
+3) drawing card if it is your draw phase.
+  * the gamecontroller controls this, it tests for input. when input is received, or in the case of player 2 turn, a certain numebr of frames has passed
+    ther ei s apull card method actiated, taking a card from the player deck in to the player hand.  then the phase number is increased by 1.
 4) Decks smaller.
 
 

@@ -1,7 +1,7 @@
+import numpy as np
 from definitions import *
-from utilities import *
-
-
+import pygame
+import utilities as util
 
 class Card:
     def __init__(self,  card_id = 1, pos=(0,0)):
@@ -10,6 +10,7 @@ class Card:
         card = the image file without the *.png extension to be loaded, determines
         the class type.
         """
+
         self.card = "big_pot" #for now this is default.
         for key in card_dict:
             if card_dict[key]["ID"] == card_id:
@@ -22,7 +23,7 @@ class Card:
         self.pos = pos
         self.color = NORMAL_MONSTER
         self.card_key = self.card
-        self.name = cardname_correction(self.card)
+        self.name = util.cardname_correction(self.card)
         self.stats = (card_dict[self.card_key]["ATTACK"],
             card_dict[self.card_key]["DEFENSE"])
         #mouse anchor centres the drag point of the card when the card is being dragged
@@ -61,9 +62,9 @@ class Card:
         picture_outline.fill(CARD_OUTLINE)
         picture_outline.blit(self.picture,(1,1))
         surf.blit(picture_outline, (central_padding-1,surf.get_height()*1/7))
-        draw_text(self.name, (central_padding*1.5, central_padding*1.5), surf)
-        draw_text("ATK: "+str(self.stats[0]), (central_padding*2, surf.get_height()*0.73), surf)
-        draw_text("DEF: "+str(self.stats[1]), (central_padding*2, surf.get_height()*0.83), surf)
+        util.draw_text(self.name, (central_padding*1.5, central_padding*1.5), surf)
+        util.draw_text("ATK: "+str(self.stats[0]), (central_padding*2, surf.get_height()*0.73), surf)
+        util.draw_text("DEF: "+str(self.stats[1]), (central_padding*2, surf.get_height()*0.83), surf)
         self.spr_card = surf
 
     def make_card_icon(self):
@@ -75,9 +76,9 @@ class Card:
         pygame.draw.rect(card_icon, CARD_OUTLINE, (0,0,card_icon.get_width(), card_icon.get_height()), 1)
         #the picture
         pic = pygame.transform.scale(self.picture, (card_icon.get_width()-2, card_icon.get_height()*1/2))
-        pic = outline_surface(pic)
+        pic = util.outline_surface(pic)
         card_icon.blit(pic,(1, card_icon.get_height()/7))
-        draw_text(self.name, (2,2), card_icon, text_size = 8)
+        util.draw_text(self.name, (2,2), card_icon, text_size = 8)
         self.icon = card_icon
 
     def is_undermouse(self, surf):

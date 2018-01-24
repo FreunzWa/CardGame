@@ -1,8 +1,9 @@
-
+import numpy as np
 from definitions import *
-from Card import *
-from Button import *
-from utilities import *
+from Button import Button
+from Card import Card
+import utilities as util
+import pygame
 
 class CardContainer:
     def __init__(self, size = 0, container_type = "deck", player_no = 1, contents = None):
@@ -94,7 +95,7 @@ class CardContainer:
                     else:
                         card.pos = ((padding*18+card.icon.get_width()*1.2*card_num+0.5*card_dimensions[0], padding*3))
                         card.icon.fill(CARD_BACK)
-                        target_surface.blit(outline_surface(card.icon), (card.pos) )
+                        target_surface.blit(util.outline_surface(card.icon), (card.pos) )
                     card.is_icon = True
 
                 else:

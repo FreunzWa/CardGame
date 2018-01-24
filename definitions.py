@@ -1,9 +1,6 @@
-import pygame
 import os
+from CardDatabase import *
 
-from  CardDatabase import *
-import numpy as np
-import pdb
 #colors
 WHITE = (255,255,255)
 BLACK = (0,0,0)
