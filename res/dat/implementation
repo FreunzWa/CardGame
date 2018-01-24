@@ -9,3 +9,35 @@ This txt outlines what features are to be added to the game.
 
 * auto-reformatting of strings
   the text font should be resized base on teh size of thte string automatically.
+
+1) Scaled down pictures in the icons
+2) text display for the phase of the game in the form:
+  * Player # : Phase (at this stage, either draw phase/ main phase/ battle phase/ end phase)
+3) 
+
+
+
+
+* ALPHA VERSION
+
+- you can battle against 1 cpu player. the duel computer.
+  * the duel computer has random cards, but pretty much always just gets trash
+
+
+
+- you start off with 10 cards
+  * abunai * 1
+  * fish man * 2
+  * big pot * 2
+  * small bug * 3
+  * devil slaves * 1
+  * mid bug * 1
+
+- every time you beat the duel computer, you get 1 card.
+  * ultra bug %2
+  * silver dragon %4
+  * abunai %4
+  * great mushi %10
+  * black ghost %15
+  * supernova %10
+  * other cards %55

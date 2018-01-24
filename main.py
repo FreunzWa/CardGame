@@ -29,22 +29,26 @@ if __name__ == "__main__":
     player_deck = CardContainer(size = 40)
     enemy_deck = CardContainer(size = 40, player_no = 2)
     player_hand = CardContainer(size = 5, container_type = "hand")
+    enemy_hand = CardContainer(size = 5, player_no = 2, container_type = "hand")
 
-    #pygame.set_caption("Ruler of Card Battles")
+    pygame.display.set_caption("Ruler of Card Battles")
     #the objects that will be used in teh game are defined here.
     game_field = new_field
-
+    game_graveyard = CardContainer(size = 0, container_type = "graveyard")
+    clock = pygame.time.Clock()
     while game_running:
-
+        clock.tick(60)
         #display
         window.fill(BACKGROUND)
         draw_text("Indev 0.4", (window.get_width()-120,4), window)
         for card_container in card_container_list:
             card_container.display(window)
             #getting the top card from the deck
-            if pygame.key.get_pressed()[pygame.K_SPACE] and card_container.container_type == "deck":
-                if card_container.player_no == 1:
-                    card_container.pull_card(player_hand)
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE and card_container.container_type == "deck":
+                        if card_container.player_no == 1:
+                            card_container.pull_card(player_hand)
 
             #drawing visible cards
             if card_container.container_type == "hand":
@@ -65,12 +69,18 @@ if __name__ == "__main__":
             if card_container.container_type == "field":
                 for counter, card in enumerate(card_container.contents):
                     card.draw(window)
+                    initial_mouse_occupied = mouse_occupied
+                    mouse_occupied = card.drag(mouse_occupied, card.icon)
+                    if not initial_mouse_occupied and mouse_occupied:
+                        card_container.pull_card(game_graveyard, ind = counter)
+                        mouse_occupied = False
 
         pygame.display.flip()
         #ending the game
         for event in pygame.event.get():
             if event == pygame.QUIT:
                 game_running = False
+
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             game_running = False
 

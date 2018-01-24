@@ -4,14 +4,17 @@ from Card import *
 from Button import *
 
 class CardContainer:
-    def __init__(self, size = 0, container_type = "deck", player_no = 1):
+    def __init__(self, size = 0, container_type = "deck", player_no = 1, contents = None):
         """
         initialises a new card container_type
         the 'top' card is considered to be index 0
         """
         self.player_no = player_no
         self.container_type = container_type
-        self.id_values = np.random.randint(1,12,(size,))
+        if contents == None:
+            self.id_values = np.random.randint(1,12,(size,))
+        else:
+            self.id_values = contents
 
         #Field initialisation
         if self.container_type == "field":
@@ -81,11 +84,16 @@ class CardContainer:
         if self.container_type != "field":
             for card_num, card in enumerate(self.contents):
                 if self.container_type == "hand" and card.pickup == False:
-                    card.pos = ((padding*3+card.icon.get_width()*1.2*card_num+0.5*card_dimensions[0], target_surface.get_height()-padding*3-card.icon.get_height()))
-                    target_surface.blit(card.icon, (card.pos) )
+                    if self.player_no ==1:
+                        card.pos = ((padding*3+card.icon.get_width()*1.2*card_num+0.5*card_dimensions[0], target_surface.get_height()-padding*3-card.icon.get_height()))
+                        target_surface.blit(card.icon, (card.pos) )
+                    else:
+                        card.pos = ((padding*18+card.icon.get_width()*1.2*card_num+0.5*card_dimensions[0], padding*3))
+                        target_surface.blit(card.icon, (card.pos) )
                     card.is_icon = True
                     if card.is_undermouse(card.icon) == True:
                         target_surface.blit(card.spr_card, (card.pos[0]-card.icon.get_width()/2, card.pos[1]-card.spr_card.get_height()-padding))
+
                 else:
                     card.is_icon = False
 
