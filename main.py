@@ -48,6 +48,7 @@ if __name__ == "__main__":
 
         #display
         master.window.fill(BACKGROUND)
+        master.display_text = ["Welcome to Ultimate Card Game!!"]
         util.draw_text("Indev 0.74", (master.window.get_width()-120,4), master.window, text_color = WHITE)
         control.display(master.window)
         for card_container in card_container_list:
