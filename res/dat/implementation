@@ -1,5 +1,22 @@
 This txt outlines what features are to be added to the game.
 
+
+
+// Decks smaller.
+// trunk container implemented. contains all of players cards. cards can be moved from the trunk into the Deck
+// menu screen
+  * can choose 'campaign' or 'deck build mode'
+// victory message for beating cpu, and subsequent GET CARD scene.
+  * the get card adds a random card into your trunk
+// message system, displays a standard message that types through the message and can be advanced with ENTER
+
+
+
+
+
+
+
+
 * deck:
   an array containing the names of all the cards in your deck.
   the deck should be an object that supports basic manipulation like shuffling,
@@ -12,10 +29,6 @@ This txt outlines what features are to be added to the game.
 
 
 
-3) drawing card if it is your draw phase.
-  * the gamecontroller controls this, it tests for input. when input is received, or in the case of player 2 turn, a certain numebr of frames has passed
-    ther ei s apull card method actiated, taking a card from the player deck in to the player hand.  then the phase number is increased by 1.
-4) Decks smaller.
 
 
 

@@ -1,10 +1,11 @@
 import os
 from CardDatabase import *
-
+import pygame
 #colors
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 DARK_BROWN = (92,60,17)
+RED = (255,0,0)
 
 BACKGROUND = (122,90,47)
 CARD_OUTLINE = BLACK
@@ -33,3 +34,10 @@ mouse_occupied = False
 
 #game rules
 hand_capacity = 4
+
+
+#input
+input_RETURN = pygame.K_RETURN
+input_SPACE = pygame.K_SPACE
+
+#rarities

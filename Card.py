@@ -26,6 +26,7 @@ class Card:
         self.name = util.cardname_correction(self.card)
         self.stats = (card_dict[self.card_key]["ATTACK"],
             card_dict[self.card_key]["DEFENSE"])
+        self.id = card_dict[self.card_key]["ID"]
         #mouse anchor centres the drag point of the card when the card is being dragged
         self.mouse_anchor = (0,0)
         self.pickup = False
@@ -34,7 +35,7 @@ class Card:
         self.make_card_icon()
         cardList.append(self)
         self.player_no = player_no
-    
+
 
 
     def draw(self, target_surface):

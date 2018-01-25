@@ -11,12 +11,7 @@ from CardContainer import CardContainer
 from DuelController import DuelController
 from Button import Button
 from Player import Player
-
-window_resolution = (720, 640)
-
-
-
-
+from GameMaster import GameMaster
 
 
 
@@ -29,7 +24,7 @@ if __name__ == "__main__":
     pygame.init()
     print "Display Initialising . . ."
     print "Simulation start."
-    window = pygame.display.set_mode(window_resolution)
+
     #starts a new duel.
     """
     initialises a new duel
@@ -38,20 +33,25 @@ if __name__ == "__main__":
     #Starting values
 
 
-
-    control = DuelController()
+    #defines the master controller, with it the window dimensiosns
+    master = GameMaster((720,640))
+    control = DuelController(master)
     pygame.display.set_caption("Ruler of Card Battles")
     clock = pygame.time.Clock()
 
+
+
     while game_running:
         clock.tick(60)
-        control.activities()
+        if master.game_freeze == False:
+            control.activities()
+
         #display
-        window.fill(BACKGROUND)
-        util.draw_text("Indev 0.6", (window.get_width()-120,4), window, text_color = WHITE)
-        control.display(window)
+        master.window.fill(BACKGROUND)
+        util.draw_text("Indev 0.7", (master.window.get_width()-120,4), master.window, text_color = WHITE)
+        control.display(master.window)
         for card_container in card_container_list:
-            card_container.display(window)
+            card_container.display(master.window)
 
 
             #drawing visible cards
@@ -61,7 +61,7 @@ if __name__ == "__main__":
                     initial_mouse_occupied = mouse_occupied
                     mouse_occupied = card.drag(mouse_occupied, card.icon)
                     if card.pickup == True:
-                        card.draw(window)
+                        card.draw(master.window)
                     if initial_mouse_occupied and not mouse_occupied:
                         for node in control.duel_field.surfaces:
                             if util.mouse_in_region((node.x ,node.y, node.width, node.height)):
@@ -74,12 +74,14 @@ if __name__ == "__main__":
 
             if card_container.container_type == "field":
                 for counter, card in enumerate(card_container.contents):
-                    card.draw(window)
+                    card.draw(master.window)
                     initial_mouse_occupied = mouse_occupied
                     mouse_occupied = card.drag(mouse_occupied, card.icon)
                     if not initial_mouse_occupied and mouse_occupied:
                         card_container.pull_card(control.duel_graveyard, ind = counter)
                         mouse_occupied = False
+
+        master.activities()
 
         pygame.display.flip()
         #ending the game

@@ -47,12 +47,12 @@ def mouse_in_region((x,y,width,height), surf = None):
     if surf == None:
         return (pygame.mouse.get_pos()[0] > x and pygame.mouse.get_pos()[0] < x+width) and (pygame.mouse.get_pos()[1] > y and pygame.mouse.get_pos()[1] < y+height)
 
-def outline_surface(surf):
+def outline_surface(surf, color = BLACK, width = 1):
 
     """
     Returns the same surface but with a black border drawn at its extremities.
     It draws over the outermost pixels.
     """
 
-    pygame.draw.rect(surf, BLACK, (0,0,surf.get_width(), surf.get_height()), 1)
+    pygame.draw.rect(surf, color, (0,0,surf.get_width(), surf.get_height()), width)
     return surf

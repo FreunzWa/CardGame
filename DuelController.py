@@ -5,9 +5,10 @@ from Player import Player
 from Card import Card
 from CardContainer import CardContainer
 import pdb
+from GameMaster import GameMaster
 
 class DuelController:
-    def __init__(self):
+    def __init__(self, master_ref):
         """
         the duel controller is initialised upon every new battle
         player 1 and 2 are player objects
@@ -16,7 +17,7 @@ class DuelController:
         self.phase_number = 0
         self.player_turn  = 1
         self.timer = -1
-
+        self.master_ref = master_ref
         self.player1 = Player(type = "human")
         self.player1.deck =CardContainer(size = 12)
         self.player1.hand = CardContainer(size = 3, container_type = "hand")
@@ -26,7 +27,7 @@ class DuelController:
         self.duel_field = CardContainer(size=0, container_type = "field")
         self.duel_graveyard = CardContainer(size = 0, container_type = "graveyard")
 
-        self.latency = 60
+        self.latency = 30
 
 
     def display(self, target_surface):
@@ -41,13 +42,39 @@ class DuelController:
             self.phase_number = 0
             #this reverts to the other player's turn
             self.player_turn = 3 - self.player_turn
+            if self.player_turn == 1:
+                self.master_ref.display_text = ["It is your turn."]
+            else:
+                self.master_ref.display_text = ["It is the computer's turn."]
+
+    def battle(self, battler1, battler2):
+        """
+        compares to battlers, then returnst the index of the battler to be
+        destroyed.
+        """
+        #special cases, must be calculated first.
+        if (battler1.id == 6 and (battler2.stats[1]>battler2.stats[0])):
+            return 1
+        elif(battler2.id == 6 and (battler1.stats[1]>battler1.stats[0])):
+            return 0
 
 
+        #regular cases
+        if (battler1.stats[0] < battler2.stats[0]):
+            return 0
+        elif  (battler1.stats[0] > battler2.stats[0]):
+            return 1
+        else:
+            #when set to negative 1 it removes both cards, it is a draw
+            return -1
 
     def activities(self):
         ##DRAW PHASE activities
         if self.timer == -1:
-            self.timer = self.latency
+            if self.phase_number == 2:
+                self.timer = self.latency * 3
+            else:
+                self.timer = self.latency
         if self.timer >0:
             self.timer -=1
 
@@ -89,15 +116,7 @@ class DuelController:
                 if len(self.duel_field.contents) < 2:
                     self.advance_phase()
                 else:
-                    if (self.duel_field.contents[0].stats[0] < self.duel_field.contents[1].stats[0]):
-                        remove_ind = 0
-                    elif  (self.duel_field.contents[0].stats[0] > self.duel_field.contents[1].stats[0]):
-                        remove_ind = 1
-                    else:
-                        #when set to negative 1 it removes both cards, it is a draw
-                        remove_ind = -1
-
-
+                    remove_ind = self.battle(self.duel_field.contents[0], self.duel_field.contents[1])
                     for counter, card in enumerate(self.duel_field.contents):
                         if counter == remove_ind:
                             self.duel_field.pull_card(self.duel_graveyard, counter)
@@ -105,9 +124,6 @@ class DuelController:
                             #both cards are destroyed.
                             self.duel_field.pull_card(self.duel_graveyard, 0)
                         self.advance_phase()
-
-
-
                 #need player input to draw.
 
             elif self.phase_number == 3:
