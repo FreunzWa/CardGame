@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
         #display
         master.window.fill(BACKGROUND)
-        util.draw_text("Indev 0.7", (master.window.get_width()-120,4), master.window, text_color = WHITE)
+        util.draw_text("Indev 0.74", (master.window.get_width()-120,4), master.window, text_color = WHITE)
         control.display(master.window)
         for card_container in card_container_list:
             card_container.display(master.window)
@@ -64,7 +64,7 @@ if __name__ == "__main__":
                         card.draw(master.window)
                     if initial_mouse_occupied and not mouse_occupied:
                         for node in control.duel_field.surfaces:
-                            if util.mouse_in_region((node.x ,node.y, node.width, node.height)):
+                            if util.mouse_in_region((node.x ,node.y, node.width, node.height)) and node.y>master.window.get_height()/3:
                                 #checking if you are putting the card in one of the field spots
                                 control.advance_phase()
                                 card_container.pull_card(control.duel_field, ind = counter)
@@ -75,11 +75,7 @@ if __name__ == "__main__":
             if card_container.container_type == "field":
                 for counter, card in enumerate(card_container.contents):
                     card.draw(master.window)
-                    initial_mouse_occupied = mouse_occupied
-                    mouse_occupied = card.drag(mouse_occupied, card.icon)
-                    if not initial_mouse_occupied and mouse_occupied:
-                        card_container.pull_card(control.duel_graveyard, ind = counter)
-                        mouse_occupied = False
+
 
         master.activities()
 

@@ -21,7 +21,7 @@ class GameMaster:
         self.display_text = []
         self.text_scroll_position = 0
         self.game_freeze = False
-        self.window = pygame.display.set_mode((window_width, window_height))
+        self.window = pygame.display.set_mode((window_width, window_height), pygame.FULLSCREEN)
         self.trunk = CardContainer(size = 0, container_type = "trunk")
 
         self.menu_tree = {

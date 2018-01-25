@@ -53,9 +53,9 @@ class DuelController:
         destroyed.
         """
         #special cases, must be calculated first.
-        if (battler1.id == 6 and (battler2.stats[1]>battler2.stats[0])):
+        if (battler1.id == 6 and (battler2.stats[0]>battler2.stats[1])):
             return 1
-        elif(battler2.id == 6 and (battler1.stats[1]>battler1.stats[0])):
+        elif(battler2.id == 6 and (battler1.stats[0]>battler1.stats[1])):
             return 0
 
 
