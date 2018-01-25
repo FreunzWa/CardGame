@@ -16,7 +16,9 @@ from GameMaster import GameMaster
 
 
 game_running = True
-
+pygame.mixer.init()
+pygame.mixer.music.load(path+"\\res\\bgm\\bgm01.mp3")
+pygame.mixer.music.play(loops = -1)
 
 if __name__ == "__main__":
 
