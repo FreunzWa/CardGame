@@ -39,7 +39,7 @@ if __name__ == "__main__":
     pygame.display.set_caption("Ruler of Card Battles")
     clock = pygame.time.Clock()
 
-
+    master.display_text = ["Welcome to Ultimate Card Game!!"]
 
     while game_running:
         clock.tick(60)
@@ -48,8 +48,8 @@ if __name__ == "__main__":
 
         #display
         master.window.fill(BACKGROUND)
-        master.display_text = ["Welcome to Ultimate Card Game!!"]
-        util.draw_text("Indev 0.74", (master.window.get_width()-120,4), master.window, text_color = WHITE)
+
+        util.draw_text("Indev 0.741", (master.window.get_width()-120,4), master.window, text_color = WHITE)
         control.display(master.window)
         for card_container in card_container_list:
             card_container.display(master.window)
