@@ -19,10 +19,10 @@ class DuelController:
         self.timer = -1
         self.master_ref = master_ref
         self.player1 = Player(type = "human")
-        self.player1.deck =CardContainer(size = 12)
+        self.player1.deck =CardContainer(size = 2)
         self.player1.hand = CardContainer(size = 3, container_type = "hand")
         self.player2 = Player(type = "cpu",  player_no = 2)
-        self.player2.deck =CardContainer(size = 12, player_no = 2, container_type = "deck")
+        self.player2.deck =CardContainer(size = 2, player_no = 2, container_type = "deck")
         self.player2.hand = CardContainer(size = 3, player_no = 2, container_type = "hand")
         self.duel_field = CardContainer(size=0, container_type = "field")
         self.duel_graveyard = CardContainer(size = 0, container_type = "graveyard")
@@ -69,6 +69,13 @@ class DuelController:
             return -1
 
     def activities(self):
+
+        #duel cases
+        if (len(self.player1.deck.contents) == 0 or len(self.player2.deck.contents) == 0 ):
+            losing_player = min(len(self.player1.deck.contents),len(self.player2.deck.contents) )
+            self.master_ref.display_text = ["Duel End!"]
+            self.master_ref.scene_goto("get card")
+
         ##DRAW PHASE activities
         if self.timer == -1:
             if self.phase_number == 2:

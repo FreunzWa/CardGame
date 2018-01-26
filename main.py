@@ -16,9 +16,6 @@ from GameMaster import GameMaster
 
 
 game_running = True
-pygame.mixer.init()
-pygame.mixer.music.load(path+"\\res\\bgm\\bgm01.mp3")
-pygame.mixer.music.play(loops = -1)
 
 if __name__ == "__main__":
 
@@ -53,31 +50,34 @@ if __name__ == "__main__":
 
         util.draw_text("Indev 0.741", (master.window.get_width()-120,4), master.window, text_color = WHITE)
         control.display(master.window)
-        for card_container in card_container_list:
-            card_container.display(master.window)
+
+    
+        if master.current_scene == "duel":
+            for card_container in card_container_list:
+                card_container.display(master.window)
 
 
-            #drawing visible cards
-            if card_container.container_type == "hand" and control.phase_number== 1:
+                #drawing visible cards
+                if card_container.container_type == "hand" and control.phase_number== 1:
 
-                for counter, card in enumerate(card_container.contents):
-                    initial_mouse_occupied = mouse_occupied
-                    mouse_occupied = card.drag(mouse_occupied, card.icon)
-                    if card.pickup == True:
+                    for counter, card in enumerate(card_container.contents):
+                        initial_mouse_occupied = mouse_occupied
+                        mouse_occupied = card.drag(mouse_occupied, card.icon)
+                        if card.pickup == True:
+                            card.draw(master.window)
+                        if initial_mouse_occupied and not mouse_occupied:
+                            for node in control.duel_field.surfaces:
+                                if util.mouse_in_region((node.x ,node.y, node.width, node.height)) and node.y>master.window.get_height()/3:
+                                    #checking if you are putting the card in one of the field spots
+                                    control.advance_phase()
+                                    card_container.pull_card(control.duel_field, ind = counter)
+                                    card.pos = (node.x+node.width/2-card_dimensions[0]/2, node.y+node.height/2-card_dimensions[1]/2)
+                                    break
+                            break
+
+                if card_container.container_type == "field":
+                    for counter, card in enumerate(card_container.contents):
                         card.draw(master.window)
-                    if initial_mouse_occupied and not mouse_occupied:
-                        for node in control.duel_field.surfaces:
-                            if util.mouse_in_region((node.x ,node.y, node.width, node.height)) and node.y>master.window.get_height()/3:
-                                #checking if you are putting the card in one of the field spots
-                                control.advance_phase()
-                                card_container.pull_card(control.duel_field, ind = counter)
-                                card.pos = (node.x+node.width/2-card_dimensions[0]/2, node.y+node.height/2-card_dimensions[1]/2)
-                                break
-                        break
-
-            if card_container.container_type == "field":
-                for counter, card in enumerate(card_container.contents):
-                    card.draw(master.window)
 
 
         master.activities()

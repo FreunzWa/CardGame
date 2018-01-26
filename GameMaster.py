@@ -21,7 +21,16 @@ class GameMaster:
         self.display_text = []
         self.text_scroll_position = 0
         self.game_freeze = False
-        self.window = pygame.display.set_mode((window_width, window_height), pygame.FULLSCREEN)
+
+        release_mode = False
+
+        if release_mode == True:
+            pygame.mixer.init()
+            pygame.mixer.music.load(path+"\\res\\bgm\\bgm01.mp3")
+            pygame.mixer.music.play(loops = -1)
+            self.window = pygame.display.set_mode((window_width, window_height), pygame.FULLSCREEN)
+        else:
+            self.window = pygame.display.set_mode((window_width, window_height))
         self.trunk = CardContainer(size = 0, container_type = "trunk")
 
         self.menu_tree = {
@@ -29,7 +38,7 @@ class GameMaster:
         }
         self.possible_scenes = ["main menu", "deck builder", "campaign mode",
         "options","duel","get card"]
-        self.current_scene = "main menu"
+        self.current_scene = "duel"
 
     def activities(self):
         self.message_display(self.display_text)
